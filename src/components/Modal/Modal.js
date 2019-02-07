@@ -1,8 +1,9 @@
 import React from 'react';
+import _ from 'lodash';
+// library to set component properties
 import PropTypes from 'prop-types';
 // css in js library for react
 import withStyles from 'react-jss';
-import classnames from 'classnames';
 
 const styles = {
   '@keyframes zoom': {
@@ -12,6 +13,10 @@ const styles = {
   '@keyframes opacity': {
     from: { opacity: 0 },
     to: { opacity: 1 },
+  },
+  '@keyframes background': {
+    from: { background: 'rgba(0,0,0,0.0)' },
+    to: { background: 'rgba(0,0,0,0.4)' },
   },
   active: {
     '&$root': {
@@ -29,6 +34,8 @@ const styles = {
     width: '100%',
     height: '100%',
     overflow: 'auto',
+    animationName: 'background',
+    animationDuration: '0.3s',
   },
   closeButton: {
     position: 'absolute',
@@ -54,11 +61,20 @@ const styles = {
   }),
 };
 
-const Modal = ({ classes, handleModalClose, isActive }) => {
-  const classNames = classnames({
+const getClassNames = (obj) => {
+  let classes = '';
+  _.map(obj, (val, key) => {
+    classes += val ? ` ${key}` : '';
+  });
+  return classes;
+};
+
+const Modal = withStyles(styles)(({ classes, handleModalClose, isActive }) => {
+  const classNames = getClassNames({
     [classes.active]: isActive,
     [classes.root]: true,
   });
+
   return (
     <React.Fragment>
       <div className={classNames}>
@@ -75,14 +91,16 @@ const Modal = ({ classes, handleModalClose, isActive }) => {
       </div>
     </React.Fragment>
   );
-};
+});
 
 Modal.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
   handleModalClose: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
 };
 
-const StyledModal = withStyles(styles)(Modal);
+Modal.defaultProps = {
+  classes: {},
+};
 
-export default StyledModal;
+export default Modal;

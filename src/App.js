@@ -1,15 +1,12 @@
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+// component
 import Gallery from 'components/Gallery/Gallery';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Gallery blocksCount={30} />
-      </div>
-    );
-  }
-}
+const App = () => (
+  <Router>
+    <Route path="/" render={props => <Gallery {...props} blocksCount={30} />} />
+  </Router>
+);
 
 export default App;

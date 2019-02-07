@@ -1,5 +1,5 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
+// library to set component properties
 import PropTypes from 'prop-types';
 // javascript util library
 import _ from 'lodash';
@@ -9,7 +9,7 @@ import Masonry from 'react-masonry-component';
 import Blocks from 'components/Gallery/Blocks';
 // helpers
 import { getRandomColor, getRandomHeight } from 'utils/helpers';
-import StyledModal from 'components/Modal/Modal';
+import Modal from 'components/Modal/Modal';
 
 class Gallery extends Component {
   state = {
@@ -17,18 +17,29 @@ class Gallery extends Component {
   };
 
   componentWillMount() {
+    const {
+      location: { pathname },
+    } = this.props;
+
+    let activeIndex = pathname.split('open/')[1];
+    activeIndex = activeIndex ? Number(activeIndex) : -1;
     this.setState((_st, props) => ({
       height: _.times(props.blocksCount, () => getRandomHeight()),
       colors: _.times(props.blocksCount, () => getRandomColor()),
+      activeIndex,
     }));
   }
 
   handleBlockClick = (index) => {
+    const { history } = this.props;
     this.setState(() => ({ activeIndex: index }));
+    history.push(`/open/${index}`);
   };
 
   handleModalClose = () => {
+    const { history } = this.props;
     this.setState(() => ({ activeIndex: -1 }));
+    history.push('/');
   };
 
   render() {
@@ -44,9 +55,6 @@ class Gallery extends Component {
         >
           {_.times(blocksCount, i => (
             <Blocks
-              blockIndex={i}
-              scale={10}
-              activeIndex={activeIndex}
               key={blocksCount - i}
               height={height[i]}
               bgColor={colors[i]}
@@ -54,10 +62,10 @@ class Gallery extends Component {
             />
           ))}
         </Masonry>
-        <StyledModal
+        <Modal
+          handleModalClose={handleModalClose}
           isActive={activeIndex !== -1}
           bgColor={colors[activeIndex]}
-          handleModalClose={handleModalClose}
         />
       </React.Fragment>
     );
@@ -66,6 +74,8 @@ class Gallery extends Component {
 
 Gallery.propTypes = {
   blocksCount: PropTypes.number,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 Gallery.defaultProps = {

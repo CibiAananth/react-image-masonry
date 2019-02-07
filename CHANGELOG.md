@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 0.1.0
 
-### [Commit 03]() - 2019-02-07
+### [Commit 04]() - 2019-02-07
+
+- #### Commit Message
+
+  Handled route based tile popup
+
+- #### Changed
+
+  1. Updated the logic to handle the modal based on the route
+
+- #### Removed
+
+  1. Unused plugins cleanup
+
+### [Commit 03](258029b) - 2019-02-07
 
 - #### Commit Message
 
