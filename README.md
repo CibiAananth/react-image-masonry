@@ -6,7 +6,6 @@ This app demostrates the popular masonry layout blocks with preview on click.
 
 - react-masonry-component
 - react-jss
-- animate.css
 
 ## Available scripts
 
