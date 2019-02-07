@@ -10,7 +10,7 @@ const styles = {
     height,
     margin: 3,
     outline: 'none',
-    transition: 'all 22s',
+    zIndex: 9,
   }),
 };
 

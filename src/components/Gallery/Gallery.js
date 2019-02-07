@@ -54,12 +54,11 @@ class Gallery extends Component {
             />
           ))}
         </Masonry>
-        {activeIndex !== -1 ? (
-          <StyledModal
-            bgColor={colors[activeIndex]}
-            handleModalClose={handleModalClose}
-          />
-        ) : null}
+        <StyledModal
+          isActive={activeIndex !== -1}
+          bgColor={colors[activeIndex]}
+          handleModalClose={handleModalClose}
+        />
       </React.Fragment>
     );
   }
